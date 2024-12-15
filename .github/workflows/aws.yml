@@ -8,18 +8,17 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
       - name: Set up AWS CLI
-        run: |set -x
-    aws ecs update-service --cluster my-cluster --service my-service --desired-count 1 || echo "ECS service update failed"
+        run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws configure set region us-west-2
-      
+
       - name: Deploy to Amazon ECS
         run: |
           aws ecs update-service --cluster my-cluster --service my-service --desired-count 1
