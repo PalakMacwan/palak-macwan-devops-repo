@@ -14,7 +14,8 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Set up AWS CLI
-        run: |
+        run: |set -x
+    aws ecs update-service --cluster my-cluster --service my-service --desired-count 1 || echo "ECS service update failed"
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws configure set region us-west-2
